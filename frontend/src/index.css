@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+  :root {
+    --page-base-color: #0D121B;
+    --secondary-color: #E15554; 
+    --third-color: #1B2537; 
+    --fourth-color: #2A4494;
+    --fifth-color: #00A6FB;
+  }
+}
+
+@layer utilities {
+  .base-color {
+    color: var(--page-base-color);
+  }
+
+  .second-color {
+    color: var(--secondary-color);
+  }
+
+  .bg-second-color {
+    background-color: var(--secondary-color);
+  }
+
+  .bg-base-color {
+    background-color: var(--page-base-color);
+  }
+  .bg-third-color {
+    background-color: var(--third-color);
+  }
+  .third-color {
+    color: var(--third-color)
+  }
+  .bg-fourth-color {
+    background-color: var(--fourth-color);
+  }
+  .fourth-color {
+    color: var(--fourth-color);
+  }
+  .bg-fifth-color {
+    background-color: var(--fifth-color);
+  }
+  .fifth-color {
+    color: var(--fifth-color);
+  }
+}
+@layer components{
+  .btn-primary{
+    background-color: var(--secondary-color);
+    @apply text-black font-bold px-6 py-3 rounded-md shadow-md hover:scale-105 transition uppercase;
+  }
+}

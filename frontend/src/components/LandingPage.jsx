@@ -1,18 +1,30 @@
-// src/App.jsx
 import Header from './Header';
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useState,useEffect } from 'react';
 
 
 export default function LandingPage() {
+
+    const [LoginStatus, setLoginStatus] = useState(false);
     const navigate = useNavigate();
     const handleclick = () => {
+        if(!LoginStatus){
+            alert("Please login to play the game");
+            navigate('/login');
+            return;
+        }
         navigate('/formation');
     };
-
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if(token){
+            setLoginStatus(true);
+        }
+    }
+    ,[]);
     return (
         <div className="bg-base-color text-white min-h-screen">
-            <Header />
+            <Header LoginStatus={LoginStatus}/>
             <main className="text-center pt-24 px-4">
                 <section className="mb-20 border-b-5 border-white/10 pb-20">
                     <div className="flex flex-col items-center gap-3">

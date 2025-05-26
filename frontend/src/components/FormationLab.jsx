@@ -3,10 +3,12 @@ import { useState, useEffect } from 'react';
 import DraggablePlayer from './Player';
 import Header from './Header';
 import Tactical from './Tactical';
-import { initialTactics } from './Constants';
+import FormationList from './FormationList';
 import { useNavigate } from 'react-router-dom';
-import { initialPlayers, POSITION_ROLES, POSITION_ZONES } from './Constants';
+import { initialTactics, initialPlayers, POSITION_ROLES, POSITION_ZONES } from './Constants';
 import { buildTacticJSON } from '../utils/handleConvert';
+import { saveFormation } from '../utils/SaveandLoad';
+
 
 export default function FormationLab() {
     const Navigate = useNavigate();
@@ -16,18 +18,11 @@ export default function FormationLab() {
     const [LoginStatus, setLoginStatus] = useState(false);
     const [players, setPlayers] = useState(initialPlayers);
     const [tactics, setTactics] = useState(initialTactics);
+    const [showList, setShowList] = useState(false);
 
 
     useEffect(() => {
-        const savedFormation = localStorage.getItem('formationData');
-        const savedTactics = localStorage.getItem('tacticsData');
         const token = localStorage.getItem('token');
-        if (savedFormation) {
-            setPlayers(JSON.parse(savedFormation));
-        }
-        if(savedTactics){
-            setTactics(JSON.parse(savedTactics));
-        }
         if (token) {
             setLoginStatus(true);
         } else {
@@ -39,14 +34,39 @@ export default function FormationLab() {
     }, []);
 
 
-    const saveFormation = () => {
-        localStorage.setItem('formationData', JSON.stringify(players));
-        localStorage.setItem('tacticsData', JSON.stringify(tactics));
-        alert('Formation and tactics saved!');
+    useEffect(() => {
+        const fetchFormation = async () => {
+            const userId = localStorage.getItem('userId');
+            const response = await fetch(`http://localhost:5500/api/formation/get?userId=${userId}`);
+            const data = await response.json();
+            if (data.success && data.formation) {
+                setPlayers(data.formation.players);
+                setTactics(data.formation.tactics);
+            }
+        };
+        fetchFormation();
+    }, []);
+
+    const handleLoadFormation = (formation) => {
+        setPlayers(formation.players);
+        setTactics(formation.tactics);
+        setShowList(false);
+        alert(`Loaded formation: ${formation.name}`);
+    }
+
+    const handleSaveFormation = async () => {
+        const name = prompt("Enter a name for your formation:");
+        if (!name) {
+            alert("Formation name is required to save.");
+            return;
+        }
+        const formation = findFormation(players);
+        await saveFormation(name,formation,players, tactics);
     };
 
     const resetFormation = () => {
         localStorage.removeItem('formationData');
+        localStorage.removeItem('tacticsData');
         setPlayers(initialPlayers); // Use a constant for the initial players
     };
 
@@ -147,7 +167,7 @@ export default function FormationLab() {
         );
     };
 
-    // const tacticJSON = buildTacticJSON(players, tactics, findFormation(players));
+    // const tacticJSON = buildTacticJSON(initialPlayers, initialTactics);
     // // Send this `tacticJSON` to your AI API with a prompt
     // console.log(JSON.stringify(tacticJSON, null, 2));
 
@@ -189,13 +209,24 @@ export default function FormationLab() {
                     </DndContext>
                 </div>
                 <div className="flex gap-4 justify-center my-4">
-                    <button onClick={saveFormation} className="bg-green-500 text-white px-4 py-2 rounded">
+                    <button onClick={handleSaveFormation} className="bg-green-500 text-white px-4 py-2 rounded">
                         Save Formation
                     </button>
                     <button onClick={resetFormation} className="bg-red-500 text-white px-4 py-2 rounded">
                         Reset Formation
                     </button>
                 </div>
+                <div className="flex justify-center mt-4">
+                    <button onClick={()=> setShowList(true)} className="bg-red-500 text-white px-4 py-2 rounded">
+                        Load Your Formations
+                    </button>
+                </div>
+                {showList && (
+                    <FormationList
+                        onSelect={handleLoadFormation}
+                        onClose={() => setShowList(false)}
+                    />
+                )}
 
             </section>
         </div>

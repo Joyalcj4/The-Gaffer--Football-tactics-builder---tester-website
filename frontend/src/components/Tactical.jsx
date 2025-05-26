@@ -2,23 +2,17 @@ import { Tacticalchanges } from "./Constants";
 import { use, useState } from "react";
 import { useEffect } from "react";
 
-const Tactical = ({tactics: parentTactics,onTacticsChange }) => {
+const Tactical = ({tactics,onTacticsChange }) => {
 
     const [openMenu, setOpenMenu] = useState(null);
-    const [tactics, setTactics] = useState(parentTactics);
+    const bg_green = "bg-green-700 text-white rounded-2xl px-4 py-4";
 
-    useEffect(() => {
-        setTactics(parentTactics);
-    }, [parentTactics]);
-
-    useEffect(() => {
-        onTacticsChange && onTacticsChange(tactics);
-    }, [tactics, onTacticsChange]);
+    
     const handleselect = (option,type) => () => {
-        setTactics((prev) => ({
-            ...prev,
+        onTacticsChange({
+            ...tactics,
             [type]: option,
-        }));
+        });
         setOpenMenu(null);
     }
 
@@ -35,7 +29,7 @@ const Tactical = ({tactics: parentTactics,onTacticsChange }) => {
                             </button>
                         </li>
                     ))):(
-                        <div className="bg-green-700 text-white rounded-2xl px-4 py-4">
+                        <div className={bg_green}>
                             <h1 className="text-3xl text-center third-color font-bold mb-5">{tactics.Mentality}</h1>
                             <button className="w-full px-2 py-2 bg-green-400 text-white rounded-2xl hover:bg-red-500 transition" 
                             onClick={() => setOpenMenu('Mentality')}>
@@ -56,7 +50,7 @@ const Tactical = ({tactics: parentTactics,onTacticsChange }) => {
                             </button>
                         </li>
                     ))):(
-                        <div className="bg-green-700 text-white rounded-2xl px-4 py-4">
+                        <div className={bg_green}>
                             <h1 className="text-3xl text-center third-color font-bold mb-5">{tactics.DefensiveLine}</h1>
                             <button className="w-full px-2 py-2 bg-green-400 text-white rounded-2xl hover:bg-red-500 transition" 
                             onClick={() => setOpenMenu('Defensive')}>
@@ -77,7 +71,7 @@ const Tactical = ({tactics: parentTactics,onTacticsChange }) => {
                             </button>
                         </li>
                     ))):(
-                        <div className="bg-green-700 text-white rounded-2xl px-4 py-4">
+                        <div className={bg_green}>
                             <h1 className="text-3xl text-center third-color font-bold mb-5">{tactics.Agressiveness}</h1>
                             <button className="w-full px-2 py-2 bg-green-400 text-white rounded-2xl hover:bg-red-500 transition" 
                             onClick={() => setOpenMenu('Agressive')}>

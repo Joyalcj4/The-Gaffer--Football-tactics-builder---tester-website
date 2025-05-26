@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,9 +14,11 @@ const Login = () => {
         try{
         e.preventDefault();
         const res = await axios.post('/api/auth/login', formData);
+        localStorage.setItem("userId", res.data.userId);
+        // Store the token in local storage
         localStorage.setItem("token", res.data.token);
         alert('Login successful!');
-        Navigate("/formation");
+        Navigate("/");
         
         }catch (error) {
             console.error('Error during login:', error);

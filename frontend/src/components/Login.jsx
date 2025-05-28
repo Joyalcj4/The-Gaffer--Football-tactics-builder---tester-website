@@ -1,6 +1,7 @@
 import  { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Login = () => {
     const [formData, setFormData] = useState({ username: '', password: '' });
@@ -13,7 +14,9 @@ const Login = () => {
     const handleSubmit = async (e) => {
         try{
         e.preventDefault();
-        const res = await axios.post('/api/auth/login', formData);
+        const res = await axios.post(`${API_URL}/api/auth/login`, formData,{
+            withCredentials: true,
+        });
         localStorage.setItem("userId", res.data.userId);
         // Store the token in local storage
         localStorage.setItem("token", res.data.token);

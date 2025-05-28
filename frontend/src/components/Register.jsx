@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -15,7 +16,9 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("/api/auth/register", formData);
+            const response = await axios.post(`${API_URL}/api/auth/register`, formData,{
+                withCredentials: true,
+            });
             alert("Registration successful!");
             console.log(response.data);
         } catch (error) {

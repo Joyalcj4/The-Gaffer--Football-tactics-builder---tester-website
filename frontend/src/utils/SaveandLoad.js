@@ -1,3 +1,4 @@
+const API_URL = import.meta.env.VITE_API_URL;
 export async function saveFormation(name, formation, players, tactics) {
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('token');
@@ -7,7 +8,7 @@ export async function saveFormation(name, formation, players, tactics) {
     }
     try {
         const formationName = `${name} ${formation}`;
-        const res = await fetch('http://localhost:5500/api/formation/save', {
+        const res = await fetch(`${API_URL}/api/formation/save`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',

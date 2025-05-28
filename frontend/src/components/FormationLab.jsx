@@ -10,6 +10,7 @@ import { buildTacticJSON } from '../utils/handleConvert';
 import { saveFormation } from '../utils/SaveandLoad';
 import { evaluateTactics } from '../utils/evaluateTactics';
 import AiFeedback from './AiFeedback';
+const API_URL = import.meta.env.VITE_API_URL;
 
 
 export default function FormationLab() {
@@ -41,7 +42,7 @@ export default function FormationLab() {
     useEffect(() => {
         const fetchFormation = async () => {
             const userId = localStorage.getItem('userId');
-            const response = await fetch(`http://localhost:5500/api/formation/all?userId=${userId}`);
+            const response = await fetch(`${API_URL}/api/formation/all?userId=${userId}`);
             const data = await response.json();
             if (data.success && data.formation) {
                 setPlayers(data.formation.players);

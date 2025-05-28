@@ -1,3 +1,4 @@
+const API_URL = import.meta.env.VITE_API_URL;
 import { useEffect, useState } from "react";
 
 export default function FormationList({ onSelect, onClose }) {
@@ -10,7 +11,7 @@ export default function FormationList({ onSelect, onClose }) {
             const token = localStorage.getItem('token');
             if (!userId) return;
             try {
-                const res = await fetch(`http://localhost:5500/api/formation/all?userId=${userId}`, {
+                const res = await fetch(`${API_URL}/api/formation/all?userId=${userId}`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 const data = await res.json();

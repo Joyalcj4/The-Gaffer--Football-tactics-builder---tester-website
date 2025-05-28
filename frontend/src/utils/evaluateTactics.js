@@ -1,5 +1,6 @@
+const API_URL = import.meta.env.VITE_API_URL;
 export async function evaluateTactics(tacticsData) {
-    const response = await fetch('http://localhost:5500/api/ai/evaluate-tactics', {
+    const response = await fetch(`${API_URL}/api/ai/evaluate-tactics`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

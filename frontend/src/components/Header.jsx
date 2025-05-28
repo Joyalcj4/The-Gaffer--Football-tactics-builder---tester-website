@@ -12,12 +12,12 @@ export default function Header({ LoginStatus }) {
   return (
     <header className="bg-third-color text-white py-4 px-8 flex justify-between items-center">
       <h1 className="text-2xl font-bold">THE GAFFER</h1>
-      <nav className="flex-1 flex justify-center space-x-6 text-sm font-medium mr-40">
+      <nav className="flex-1 flex justify-center space-x-6 text-sm font-light mr-40">
         <a href="/" className="text-yellow-400">Home</a>
         {!LoginStatus ? (
           <a href="/login">Login now</a>
         ) : (
-          <a onClick={handlelogout}>Logout</a>
+          <button onClick={handlelogout}>Logout</button>
         )}
         <a href="/formationlab">Formation Lab</a>
 

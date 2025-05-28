@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import { initialTactics, initialPlayers, POSITION_ROLES, POSITION_ZONES } from './Constants';
 import { buildTacticJSON } from '../utils/handleConvert';
 import { saveFormation } from '../utils/SaveandLoad';
+import { evaluateTactics } from '../utils/evaluateTactics';
+import AiFeedback from './AiFeedback';
 
 
 export default function FormationLab() {
@@ -19,6 +21,8 @@ export default function FormationLab() {
     const [players, setPlayers] = useState(initialPlayers);
     const [tactics, setTactics] = useState(initialTactics);
     const [showList, setShowList] = useState(false);
+    const [aiFeedback, setAiFeedback] = useState(null);
+    const [aiLoading, setAiLoading] = useState(false);
 
 
     useEffect(() => {
@@ -37,7 +41,7 @@ export default function FormationLab() {
     useEffect(() => {
         const fetchFormation = async () => {
             const userId = localStorage.getItem('userId');
-            const response = await fetch(`http://localhost:5500/api/formation/get?userId=${userId}`);
+            const response = await fetch(`http://localhost:5500/api/formation/all?userId=${userId}`);
             const data = await response.json();
             if (data.success && data.formation) {
                 setPlayers(data.formation.players);
@@ -61,7 +65,22 @@ export default function FormationLab() {
             return;
         }
         const formation = findFormation(players);
-        await saveFormation(name,formation,players, tactics);
+        await saveFormation(name, formation, players, tactics);
+    };
+
+    const handleEvaluateTactics = async () => {
+        setAiLoading(true);
+        setAiFeedback(null);
+        try {
+            const formation = findFormation(players);
+            const tacticsData = buildTacticJSON(players, tactics, formation);
+            console.log("Tactics Data:", tacticsData);
+            const result = await evaluateTactics(tacticsData);
+            setAiFeedback(result);
+        } catch (err) {
+            setAiFeedback({ feedback: "Failed to get AI feedback." });
+        }
+        setAiLoading(false);
     };
 
     const resetFormation = () => {
@@ -167,9 +186,8 @@ export default function FormationLab() {
         );
     };
 
-    // const tacticJSON = buildTacticJSON(initialPlayers, initialTactics);
-    // // Send this `tacticJSON` to your AI API with a prompt
-    // console.log(JSON.stringify(tacticJSON, null, 2));
+    const tacticsdata = buildTacticJSON(initialPlayers, initialTactics);
+
 
 
     return (
@@ -217,17 +235,31 @@ export default function FormationLab() {
                     </button>
                 </div>
                 <div className="flex justify-center mt-4">
-                    <button onClick={()=> setShowList(true)} className="bg-red-500 text-white px-4 py-2 rounded">
+                    <button onClick={() => setShowList(true)} className="bg-red-500 text-white px-4 py-2 rounded">
                         Load Your Formations
                     </button>
                 </div>
+                <div className="flex justify-center mt-4">
+                    <button
+                        onClick={handleEvaluateTactics}
+                        className="bg-blue-500 text-white px-4 py-2 rounded"
+                        disabled={aiLoading}
+                    >
+                        {aiLoading ? 'Evaluating...' : 'Evaluate Tactics'}
+                    </button>
+                </div>
+                {aiFeedback && (
+                    <AiFeedback 
+                        aiFeedback={aiFeedback} 
+                        onClose={() => setAiFeedback(null)}
+                    />
+                )}
                 {showList && (
                     <FormationList
                         onSelect={handleLoadFormation}
                         onClose={() => setShowList(false)}
                     />
                 )}
-
             </section>
         </div>
     );

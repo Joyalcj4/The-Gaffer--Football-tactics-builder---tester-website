@@ -3,6 +3,7 @@ import LandingPage from './components/LandingPage';
 import FormationLab from './components/FormationLab';
 import Register from './components/Register';
 import Login from './components/Login';
+import FAQ from './components/FAQ';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/formation" element={<FormationLab />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/faq" element={<FAQ />} />
     </Routes>
   );
 }

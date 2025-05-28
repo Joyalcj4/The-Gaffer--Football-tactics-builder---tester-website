@@ -1,6 +1,7 @@
 import Header from './Header';
 import { useNavigate } from 'react-router-dom';
 import { useState,useEffect } from 'react';
+import Footer from './Footer';
 
 
 export default function LandingPage() {
@@ -49,11 +50,11 @@ export default function LandingPage() {
                             Genius
                         </h2>
                         <p className="text-lg text-white/80 mb-4">
-                            Master your team's tactics to outsmart rival managers. Select your
-                            Captain, tinker with formations and gear up for matchday.
+                            Dive into the world of football management with our immersive game. 
+                            Experience the thrill of building your team, devising strategies, and leading your players to victory.
                         </p>
                         <p className="text-lg text-white/80 mb-10">
-                            Take over the scouting, complete transfers, and conquer future competitions.
+                            Imagine, create, and test your own custom tactics! Build unique formations and strategies, then challenge our AI to see how your football genius stacks up.
                         </p>
                         <button className="btn-primary" onClick={handleclick}>
                             GO TO THE GAME
@@ -62,6 +63,7 @@ export default function LandingPage() {
                     <img src='/assets/tactics.png' alt="Tactics Illustration" className="mx-auto mt-10 max-w-full h-auto mb-30" />
                 </div>
             </main>
+            <Footer />
         </div>
     );
 }

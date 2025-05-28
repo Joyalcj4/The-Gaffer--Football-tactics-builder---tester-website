@@ -1,6 +1,5 @@
 import { Tacticalchanges } from "./Constants";
-import { use, useState } from "react";
-import { useEffect } from "react";
+import { useState } from "react";
 
 const Tactical = ({tactics,onTacticsChange }) => {
 

@@ -203,6 +203,10 @@ export default function FormationLab() {
                     <p className="text-2xl md:text-3xl mt-16 font-mono">
                         Create your tactic and test it, incarnate your inner Gaffer.
                     </p>
+                    <p className="text-2xl md:text-3xl mt-16 font-mono text-amber-500">
+                        Drag to change position
+                        Right click to change player roles
+                    </p>
                 </div>
             </section>
             <Tactical tactics={tactics} onTacticsChange={handleTactics} />

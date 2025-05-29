@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom'; // <-- add Link here
+import { useNavigate,} from 'react-router-dom'; // <-- add Link here
 const API_URL = import.meta.env.VITE_API_URL;
 
 const Login = () => {
     const [formData, setFormData] = useState({ username: '', password: '' });
-    const Navigate = useNavigate();
+    const navigate = useNavigate();
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -29,7 +28,7 @@ const Login = () => {
             localStorage.setItem("userId", data.userId);
             localStorage.setItem("token", data.token);
             alert('Login successful!');
-            Navigate("/");
+            navigate("/");
         } catch (error) {
             console.error('Error during login:', error);
             alert('Login failed. Please check your credentials.');
@@ -84,9 +83,9 @@ const Login = () => {
                 </form>
                 <p className="mt-4 text-sm text-center text-gray-500">
                     Don't have an account?{' '}
-                    <Link to="/register" className="text-blue-500 hover:underline">
+                    <button onClick={()=> navigate('/register')} className="text-blue-500 hover:underline">
                         Register here
-                    </Link>
+                    </button>
                 </p>
             </div>
         </div>

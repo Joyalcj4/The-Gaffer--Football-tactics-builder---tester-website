@@ -17,7 +17,7 @@ const Tactical = ({tactics,onTacticsChange }) => {
 
     return (
         <div className="bg-base-color overflow-hidden gap-10 flex items-center justify-center">
-            <div>
+            <div className="w-72">
                 <h1 className="text-3xl font-bold text-center text-white">Mentality</h1>
                 <ul className="mt-4 space-y-2">
                     {openMenu === 'Mentality' ? (Tacticalchanges.Mentality.map((option, idx) => (
@@ -38,7 +38,7 @@ const Tactical = ({tactics,onTacticsChange }) => {
                     )}
                 </ul>
             </div>
-            <div>
+            <div className="w-72">
                 <h1 className="text-3xl font-bold text-center text-white">Defensive line</h1>
                 <ul className="mt-4 space-y-2">
                     {openMenu ==='Defensive' ? (Tacticalchanges.DefensiveLine.map((option, idx) => (
@@ -59,7 +59,7 @@ const Tactical = ({tactics,onTacticsChange }) => {
                     )}
                 </ul>
             </div>
-            <div>
+            <div className="w-72">
                 <h1 className="text-3xl font-bold text-center text-white">Agressiveness</h1>
                 <ul className="mt-4 space-y-2">
                     {openMenu ==='Agressive' ? (Tacticalchanges.Agressiveness.map((option, idx) => (
@@ -80,7 +80,6 @@ const Tactical = ({tactics,onTacticsChange }) => {
                     )}
                 </ul>
             </div>
-
         </div>
     );
 

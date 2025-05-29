@@ -15,7 +15,7 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`${API_URL}/api/auth/register`, {
+            const response = await fetch('https://gaffer-backend.onrender.com/api/auth/register', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

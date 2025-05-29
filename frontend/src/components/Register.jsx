@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const Register = () => {
@@ -16,11 +15,20 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${API_URL}/api/auth/register`, formData,{
-                withCredentials: true,
+            const response = await fetch(`${API_URL}/api/auth/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify(formData)
             });
+            if (!response.ok) {
+                throw new Error("Registration failed");
+            }
             alert("Registration successful!");
-            console.log(response.data);
+            const data = await response.json();
+            console.log(data);
         } catch (error) {
             console.error("Error during registration:", error);
             alert("Registration failed. Please try again.");

@@ -12,18 +12,25 @@ const Login = () => {
     };
 
     const handleSubmit = async (e) => {
-        try{
         e.preventDefault();
-        const res = await axios.post(`${API_URL}/api/auth/login`, formData,{
-            withCredentials: true,
-        });
-        localStorage.setItem("userId", res.data.userId);
-        // Store the token in local storage
-        localStorage.setItem("token", res.data.token);
-        alert('Login successful!');
-        Navigate("/");
-        
-        }catch (error) {
+        try {
+            const response = await fetch(`${API_URL}/api/auth/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include", // similar to withCredentials: true in axios
+                body: JSON.stringify(formData)
+            });
+            if (!response.ok) {
+                throw new Error("Login failed");
+            }
+            const data = await response.json();
+            localStorage.setItem("userId", data.userId);
+            localStorage.setItem("token", data.token);
+            alert('Login successful!');
+            Navigate("/");
+        } catch (error) {
             console.error('Error during login:', error);
             alert('Login failed. Please check your credentials.');
         }

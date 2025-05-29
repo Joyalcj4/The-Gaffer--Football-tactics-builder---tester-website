@@ -3,9 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
- // move this to .env later
 
-// Register admin (run once to create your account)
 router.post('/register', async (req, res) => {
     console.log('Register route hit');
   const { username, password } = req.body;

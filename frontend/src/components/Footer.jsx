@@ -1,5 +1,6 @@
 import { FaGithub, FaInstagram, FaLinkedin, } from "react-icons/fa";
 import { BsQuestionCircle } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
 const currentYear = new Date().getFullYear();
@@ -12,9 +13,9 @@ return (
             <a href="https://github.com/Joyalcj4/The-Gaffer--Football-tactics-builder---tester-website.git" target="_blank" rel="noopener noreferrer">
                 <FaGithub className="text-yellow-400 hover:text-yellow-500 transition-colors" />
             </a>
-            <a href="/faq" className="text-yellow-400 hover:text-yellow-500 transition-colors">
+            <Link to="/faq" className="text-yellow-400 hover:text-yellow-500 transition-colors">
                 <BsQuestionCircle />
-            </a>
+            </Link>
         </div>
         <p className="text-sm">© {currentYear} The Gaffer. All rights reserved.</p>
     </footer>

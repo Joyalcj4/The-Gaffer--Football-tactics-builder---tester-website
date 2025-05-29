@@ -1,6 +1,6 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // <-- add Link here
 const API_URL = import.meta.env.VITE_API_URL;
 
 const Login = () => {
@@ -84,9 +84,9 @@ const Login = () => {
                 </form>
                 <p className="mt-4 text-sm text-center text-gray-500">
                     Don't have an account?{' '}
-                    <a href="/register" className="text-blue-500 hover:underline">
+                    <Link to="/register" className="text-blue-500 hover:underline">
                         Register here
-                    </a>
+                    </Link>
                 </p>
             </div>
         </div>

@@ -1,6 +1,7 @@
 // src/components/Header.jsx
 import { FaDiscord, FaTwitter } from "react-icons/fa";
 import { BsQuestionCircle } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 export default function Header({ LoginStatus }) {
 
@@ -13,14 +14,13 @@ export default function Header({ LoginStatus }) {
     <header className="bg-third-color text-white py-4 px-8 flex justify-between items-center">
       <h1 className="text-2xl font-bold">THE GAFFER</h1>
       <nav className="flex-1 flex justify-center space-x-6 text-sm font-light mr-40">
-        <a href="/" className="text-yellow-400">Home</a>
+        <Link to="/" className="text-yellow-400">Home</Link>
         {!LoginStatus ? (
-          <a href="/login">Login now</a>
+          <Link to="/login">Login now</Link>
         ) : (
           <button onClick={handlelogout}>Logout</button>
         )}
-        <a href="/formationlab">Formation Lab</a>
-
+        <Link to="/formation">Formation Lab</Link>
       </nav>
       <div className="flex items-center space-x-4">
        

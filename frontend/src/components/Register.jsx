@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 const API_URL = import.meta.env.VITE_API_URL;
+import { useNavigate,} from 'react-router-dom';
 
 const Register = () => {
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
         username: "",
         password: "",
@@ -77,9 +79,9 @@ const Register = () => {
                 </form>
                 <p className="mt-4 text-sm text-center text-white">
                     Already have an account?{" "}
-                    <a href="/login" className="text-blue-500 hover:underline">
+                    <button onClick={()=> navigate('/login')} className="text-blue-500 hover:underline">
                         Login
-                    </a>
+                    </button>
                 </p>
             </div>
         </div>
